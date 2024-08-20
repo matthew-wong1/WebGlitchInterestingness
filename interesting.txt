@@ -1,0 +1,17 @@
+panic
+fault
+abort
+segmentation
+AddressSanitizer
+LeakSanitizer
+ThreadSanitizer
+UndefinedBehaviorSanitizer
+MemorySanitizer
+aborted
+failed
+exception
+illegal
+violation
+core
+dumped
+assertion
