@@ -57,7 +57,7 @@ if [[ -n "$results" ]]; then
     # Increment the highest number found
     next_num=$((highest_num + 1))
 
-    cp tmp_concatenated.js "$ALSO_INTERESTING_DIR"/"$next_num".js
+    cp "$TEST_FILE" "$ALSO_INTERESTING_DIR"/"$next_num".js
 fi
 
 exit 1
