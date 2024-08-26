@@ -8,7 +8,6 @@ ThreadSanitizer
 UndefinedBehaviorSanitizer
 MemorySanitizer
 aborted
-failed
 exception
 illegal
 violation

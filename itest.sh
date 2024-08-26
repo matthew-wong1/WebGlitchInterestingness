@@ -6,7 +6,10 @@ INTERCEPTORS="DYLD_INSERT_LIBRARIES=/Applications/Xcode.app/Contents/Developer/T
 OTHER_INTERESTING_OUTPUTS_FILE="/Users/matthew/Documents/msc/final_proj/WebGlitchInterestingness/interesting.txt"
 UNINTERESTING_OUTPUTS_FILE="/Users/matthew/Documents/msc/final_proj/WebGlitchInterestingness/uninteresting.txt"
 
-TEST_FILE="/Users/matthew/Documents/msc/final_proj/WebGlitchInterestingness/test_case.js"
+# MUST BE A RELATIVE PATH 
+TEST_FILE="test_case.js"
+
+# MUST BE ABSOLUTE PATHS 
 HEADER="/Users/matthew/Documents/msc/final_proj/WebGlitchInterestingness/header.js"
 ALSO_INTERESTING_DIR="/Users/matthew/Documents/msc/final_proj/WebGlitchInterestingness/also_interesting"
 
@@ -36,6 +39,10 @@ exclude_pattern=$(tr '\n' '|' < "$UNINTERESTING_OUTPUTS_FILE" | sed 's/|$//')
 
 
 rm tmp_concatenated.js
+
+if [ -z "$output" ]; then
+    exit 1
+fi
 
 # Check if the output contains 'AddressSanitizer'
 if echo "$output" | grep -q "$OUTPUT_OF_INTEREST"; then
