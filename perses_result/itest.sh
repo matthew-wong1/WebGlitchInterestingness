@@ -21,7 +21,7 @@ export MTL_DEBUG_LAYER=1
 export VK_INSTANCE_LAYERS=VK_LAYER_KHRONOS_validation
 
 # Deno specific variables 
-WGPU_BACKEND="DENO_WEBGPU_BACKEND=metal"
+WGPU_BACKEND="DENO_WEBGPU_BACKEND=vulkan"
 DENO_PATH="/Users/matthew/Documents/msc/final_proj/deno/target/aarch64-apple-darwin/debug/deno"
 
 # Create the output folder
