@@ -3,10 +3,10 @@
 # java -jar /Users/matthew/Documents/msc/final_proj/perses/bazel-bin/src/org/perses/perses_deploy.jar --test-script itest.sh --input-file test_case.js
 
 # Use absolute paths only
-OUTPUT_OF_INTEREST="// thread 'main' panicked at /Users/matthew/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wgpu-core-0.21.1/src/storage.rs:117:9:"
+OUTPUT_OF_INTEREST="FPE on unknown address"
 INTERCEPTORS="DYLD_INSERT_LIBRARIES=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.asan_osx_dynamic.dylib"
-OTHER_INTERESTING_OUTPUTS_FILE="/Users/matthew/Documents/msc/final_proj/WebGlitchInterestingness/interesting.txt"
-UNINTERESTING_OUTPUTS_FILE="/Users/matthew/Documents/msc/final_proj/WebGlitchInterestingness/uninteresting.txt"
+OTHER_INTERESTING_OUTPUTS_FILE="/home/matthew/final_project/WebGlitchInterestingness/interesting.txt"
+UNINTERESTING_OUTPUTS_FILE="/home/matthew/final_project/WebGlitchInterestingness/uninteresting.txt"
 
 # MUST BE A RELATIVE PATH 
 TEST_FILE="test_case.js"
@@ -25,23 +25,21 @@ WGPU_BACKEND="DENO_WEBGPU_BACKEND=metal"
 DENO_PATH="/Users/matthew/Documents/msc/final_proj/deno/target/aarch64-apple-darwin/debug/deno"
 
 # Create the output folder
-mkdir -p "$ALSO_INTERESTING_DIR"
+# mkdir -p "$ALSO_INTERESTING_DIR"
 
 # Concatenate files 
-cat "$HEADER" "$TEST_FILE" > "tmp_concatenated.js"
+# cat "$HEADER" "$TEST_FILE" > "tmp_concatenated.js"
 
 
 # Run the test using node 
-# output=$(DYLD_INSERT_LIBRARIES=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.asan_osx_dynamic.dylib DAWN_DEBUG_BREAK_ON_ERROR=1 node tmp_concatenated.js $filename 2>&1)
+output=$(LD_PRELOAD=/usr/lib/gcc/x86_64-linux-gnu/11/libasan.so node test_case.js 2>&1)
 
 # Run the test using Deno 
-output=$(env $WGPU_BACKEND $DENO_PATH run --allow-read --unstable-webgpu --allow-write tmp_concatenated.js 2>&1)
+# output=$(env $WGPU_BACKEND $DENO_PATH run --allow-read --unstable-webgpu --allow-write tmp_concatenated.js 2>&1)
 
 include_pattern=$(tr '\n' '|' < "$OTHER_INTERESTING_OUTPUTS_FILE" | sed 's/|$//')
 exclude_pattern=$(tr '\n' '|' < "$UNINTERESTING_OUTPUTS_FILE" | sed 's/|$//')
 
-
-rm tmp_concatenated.js
 
 if [ -z "$output" ]; then
     exit 1
