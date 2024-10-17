@@ -1,8 +1,7 @@
-const { create, globals } = require('/home/matthew/final_project/dawn/out/Debug/dawn.node');
+const { create, globals } = require('/home/matthew/final_project/dawn_final/out/Debug/dawn.node');
 Object.assign(globalThis, globals);
 let navigator = { gpu: create([]), };
 const fs = require('node:fs');
-
 function loadShader(file) {
     try {
         const data = fs.readFileSync(file, 'utf8');
@@ -13,10 +12,10 @@ function loadShader(file) {
 }
 
 // MUST BE A RELATIVE PATH
-const shader = loadShader("./compute.wgsl");
-
+const shader = loadShader("/home/matthew/final_project/take_homes/compute.wgsl");
 async function main() {
     const adapter = await navigator.gpu.requestAdapter();
+	console.log(adapter.name);
     const device = await adapter.requestDevice();
     const shaderModule = device.createShaderModule({
         code: shader
